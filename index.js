@@ -25,34 +25,32 @@ function getRandomNumber(min, max) {
 
 // Function to handle guess submission
 function checkGuess() {
-
   // Convert guess input value to an integer
   const guess = parseInt(guessInput.value, 10);
 
   // Check if the guess is a valid number
   if (isNaN(guess)) {
-    alert('Please enter a valid number between 2 and 98');
+    alert('Please enter a valid number between 1 and 99');
     return;
   }
   
-  // Check if the guess is a number from 2 to 98
-  if (guess <= 1 || guess >= 99) {
-    alert('Please enter a valid number between 2 and 98');
+  // Check if the guess is a number from 1 to 99
+  if (guess < 1 || guess > 99) {
+    alert('Please enter a valid number between 1 and 99');
     return;
   }
 
   // Increment attempts counter
-  attempts = attempts + 1;
+  attempts += 1;
 
   // Hide all messages before displaying new one
   hideAllMessages();
 
   // If the guess is correct
   if (guess === targetNumber) {
-
     // Show number of guesses message
     numberOfGuessesMessage.style.display = '';
-    numberOfGuessesMessage.innerHTML = `You made ${attempts} guesses`;
+    numberOfGuessesMessage.innerHTML = `You made ${attempts} ${attempts === 1 ? 'guess' : 'guesses'}`; // Singular or plural
 
     // Show correct guess message
     correctMessage.style.display = '';
@@ -63,11 +61,11 @@ function checkGuess() {
 
     // If the guess is incorrect
   } else {
-
     if (guess < targetNumber) {
       // Show too low message
       tooLowMessage.style.display = ''; // Show too low message
     } else {
+      // Show too high message
       // Fixed bug: Correct message should show "too high", not "too low"
       tooHighMessage.style.display = '';
     }
@@ -77,7 +75,7 @@ function checkGuess() {
 
     // Display message with remaining guesses
     numberOfGuessesMessage.style.display = '';
-    numberOfGuessesMessage.innerHTML = `You guessed ${guess}. <br> ${remainingAttempts} guesses remaining`;
+    numberOfGuessesMessage.innerHTML = `You guessed ${guess}.<br> ${remainingAttempts} ${remainingAttempts === 1 ? 'guess' : 'guesses'} remaining.`;
 
     // If max attempts reached, disable buttons and show message
     if (attempts === maxNumberOfAttempts) { // Fixed bug: '===' instead of '===='
@@ -94,12 +92,10 @@ function checkGuess() {
 
   // Show reset button
   resetButton.style.display = '';
-
 }
 
 // Function to hide all messages
 function hideAllMessages() {
-
   // Loop through messages and hide them all
   for (let elementIndex = 0; elementIndex < messages.length; elementIndex++) { // Fixed bug: changed '<=' to '<' for valid index range
     messages[elementIndex].style.display = 'none';
@@ -108,9 +104,8 @@ function hideAllMessages() {
 
 // Function to initialize or reset the game
 function setup() {
-
   // Generate a new target number
-  targetNumber = getRandomNumber(1, 99); // Correct range 1 to 99, not 1 to 100
+  targetNumber = getRandomNumber(1, 100); // Correct range 1 to 99
   // Log target number
   console.log(`target number: ${targetNumber}`);
 
@@ -118,11 +113,12 @@ function setup() {
   attempts = 0; // Fixed bug: reset attempts variable instead of maxNumberOfAttempts
 
   // Enable the input and submit button
-  submitButton.disabled = false; // Fixed typo: 'disabeld' to 'disabled'
+  submitButton.disabled = false;
   guessInput.disabled = false;
 
   // Hide all messages at the start
   hideAllMessages();
+
   // Hide reset button at the start
   resetButton.style.display = 'none';
 }
