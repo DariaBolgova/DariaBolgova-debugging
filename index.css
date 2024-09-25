@@ -1,3 +1,4 @@
+/* Center the main container and its contents */
 main {
   display: flex;
   justify-content: center;
@@ -6,10 +7,12 @@ main {
   margin: auto;
 }
 
+/* Set width for the input field */
 #guess {
   width: 5em;
 }
 
+/* Margin for the reset button */
 #reset {
   margin: 20px;
 }
